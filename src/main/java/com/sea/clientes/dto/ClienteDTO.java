@@ -10,7 +10,7 @@ public class ClienteDTO {
 
     @NotBlank
     @Size(min = 3, max = 100)
-    @Pattern(regexp = "^[A-Za-zÀ-ú ]+$")
+    @Pattern(regexp = "^[A-Za-zÀ-ú0-9 ]+$")
     private String nome;
 
     @NotBlank

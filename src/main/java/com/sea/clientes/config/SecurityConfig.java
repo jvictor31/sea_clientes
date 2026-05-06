@@ -34,12 +34,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+            .cors() // 🔥 ISSO AQUI É O QUE FALTA
+            .and()
             .csrf().disable()
-            .headers().frameOptions().disable() // 🔥 necessário pro H2
+            .headers().frameOptions().disable() // H2 console
 
             .and()
             .authorizeRequests()
-                .antMatchers("/h2-console/**").permitAll() // 🔥 libera H2
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/clientes/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/clientes/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

@@ -9,16 +9,10 @@ public class EnderecoDTO {
     @NotBlank
     private String cep;
 
-    @NotBlank
+    // 🔥 AGORA OPCIONAIS (ViaCEP preenche)
     private String logradouro;
-
-    @NotBlank
     private String bairro;
-
-    @NotBlank
     private String cidade;
-
-    @NotBlank
     private String uf;
 
     private String complemento;

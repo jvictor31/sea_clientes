@@ -58,4 +58,13 @@ public class ClienteService {
     private String limpar(String v) {
         return v.replaceAll("[^0-9]", "");
     }
+
+    public Cliente buscar(Long id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+    }
+
+    public void deletar(Long id) {
+        repo.deleteById(id);
+    }
 }

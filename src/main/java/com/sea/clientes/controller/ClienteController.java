@@ -26,4 +26,14 @@ public class ClienteController {
     public List<Cliente> listar() {
         return service.listar();
     }
+
+    @GetMapping("/{id}")
+    public Cliente buscar(@PathVariable Long id) {
+        return service.buscar(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Long id) {
+        service.deletar(id);
+    }
 }

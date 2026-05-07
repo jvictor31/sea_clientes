@@ -9,7 +9,6 @@ public class EnderecoDTO {
     @NotBlank
     private String cep;
 
-    // 🔥 AGORA OPCIONAIS (ViaCEP preenche)
     @NotBlank
     private String logradouro;
 

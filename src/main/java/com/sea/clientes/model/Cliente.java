@@ -13,7 +13,9 @@ public class Cliente {
     private Long id;
 
     private String nome;
-    private String cpf; // sem máscara
+
+    @Column(unique = true)
+    private String cpf;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Endereco> enderecos;

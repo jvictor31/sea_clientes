@@ -17,16 +17,22 @@ public class ClienteService {
     private final ClienteRepository repo;
 
     public Cliente salvar(ClienteDTO dto) {
+
+        String cpfLimpo = limpar(dto.getCpf());
+
+        if (repo.existsByCpf(cpfLimpo)) {
+            throw new RuntimeException("CPF já cadastrado");
+        }
+
         Cliente c = new Cliente();
         c.setNome(dto.getNome());
-        c.setCpf(limpar(dto.getCpf()));
+        c.setCpf(cpfLimpo);
 
         c.setEnderecos(dto.getEnderecos().stream().map(e -> {
 
             Endereco en = new Endereco();
             en.setCep(limpar(e.getCep()));
 
-            // 🔥 INTEGRAÇÃO COM VIA CEP
             ViaCepResponse viaCep = buscarCep(en.getCep());
 
             en.setLogradouro(
@@ -62,18 +68,24 @@ public class ClienteService {
         }).collect(Collectors.toList()));
 
         c.setTelefones(dto.getTelefones().stream().map(t -> {
+
             Telefone tel = new Telefone();
             tel.setNumero(limpar(t.getNumero()));
             tel.setTipo(t.getTipo());
             tel.setCliente(c);
+
             return tel;
+
         }).collect(Collectors.toList()));
 
         c.setEmails(dto.getEmails().stream().map(em -> {
+
             Email email = new Email();
             email.setEndereco(em.getEndereco());
             email.setCliente(c);
+
             return email;
+
         }).collect(Collectors.toList()));
 
         return repo.save(c);

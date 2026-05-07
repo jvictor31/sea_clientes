@@ -5,6 +5,8 @@ import com.sea.clientes.model.Cliente;
 import com.sea.clientes.service.ClienteService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +20,18 @@ public class ClienteController {
     private final ClienteService service;
 
     @PostMapping
-    public Cliente criar(@Valid @RequestBody ClienteDTO dto) {
-        return service.salvar(dto);
+    public ResponseEntity<?> criar(@Valid @RequestBody ClienteDTO dto) {
+
+        try {
+
+            return ResponseEntity.ok(service.salvar(dto));
+
+        } catch (RuntimeException e) {
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(e.getMessage());
+        }
     }
 
     @GetMapping
